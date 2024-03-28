@@ -11,24 +11,27 @@ pipeline {
                 git branch: 'SpringBoot_Maven', url: 'https://github.com/Monopich/DevOps_All_Project.git'
             }
         }
-        stage('Build'){
-                steps {
-                    echo "Building the project..."
-                    bat "mvn clean package"
-                }
+        stage('Build') {
+            steps {
+                echo 'Building the project...'
+                sh 'mvn clean package' // Use sh for shell commands (Linux/macOS)
             }
+        }
 
-        stage('Test'){
-            steps{
-                echo "Running tests..."
-                sh 'mvn test'
+        stage('Test') {
+            steps {
+                echo 'Running tests...'
+                sh 'mvn test' // Use sh for shell commands (Linux/macOS)
             }
         }
 
         stage('Deploy') {
             steps {
-                echo "Deploying the artifact..."
-                bat "mvn jar:jar deploy:deploy"
+                echo 'Deploying the artifact...'
+                script { // Use script for more complex logic (optional)
+                sh 'mvn jar:jar deploy:deploy' // Use sh for shell commands (Linux/macOS)
+                // Additional deployment steps (e.g., copy artifacts to server)
+                }
             }
         }
     }
