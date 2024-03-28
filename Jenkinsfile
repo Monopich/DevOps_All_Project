@@ -4,6 +4,9 @@ pipeline {
         BOT_TOKEN = "6853243184:AAF2zVn5Q_bWzgjmAERZjLJp-WEVfMczzDA"
         CHAT_ID = "-1002012810646"
     }
+    tools {
+            maven 'Maven 3.9.2'
+    }
     stages {
         stage('Fetch from GitHub') { //build steps
             steps {
