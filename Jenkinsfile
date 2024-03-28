@@ -1,11 +1,11 @@
 pipeline {
     agent any // window agent, Jenkins-laravel (other machine)
+    tools {
+            maven 'maven-3.9.2'
+    }
     environment {
         BOT_TOKEN = "6853243184:AAF2zVn5Q_bWzgjmAERZjLJp-WEVfMczzDA"
         CHAT_ID = "-1002012810646"
-    }
-    tools {
-            maven "maven 3.9.2"
     }
     stages {
         stage('Fetch from GitHub') { //build steps
@@ -14,18 +14,18 @@ pipeline {
                 git branch: 'Maven', url: 'https://github.com/Monopich/DevOps_All_Project.git'
             }
         }
-        stage('Build using Tools'){
-            steps{
-                echo 'Compiling code ...'
-                sh 'mvn install'
+        stages {
+            stage ('Build') {
+            steps {
                 sh 'mvn clean package'
             }
-        }
-        stage('Test the app'){
-            steps{
-                echo 'Testing unit tests...'
-                echo 'Testing feature...'
-                sh 'java -cp target/mytp01-1.0-SNAPSHOT.jar gic.demo.App'
+            }
+            stage ('Deploy') {
+            steps {
+                script {
+                deploy adapters: [tomcat9(credentialsId: 'tomcat_credential', path: '', url: 'http://dayal-test.letspractice.tk:8081')], contextPath: '/pipeline', onFailure: false, war: 'webapp/target/*.war' 
+                }
+            }
             }
         }
     }
