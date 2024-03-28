@@ -13,6 +13,8 @@ pipeline {
         }
         stage('Build using Tools'){
             steps{
+                echo 'Compiling code ...'
+                sh 'mvn install'
                 sh 'mvn clean package'
             }
         }
