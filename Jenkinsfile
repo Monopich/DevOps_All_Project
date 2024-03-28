@@ -11,24 +11,28 @@ pipeline {
                 git branch: 'tp2', url: 'https://github.com/Monopich/devops_jenknis.git'
             }
         }
-        stage('Build'){
-			steps {
-				bat "mvn clean install -DskipTests"
-			}
-		}
+       stages {
+            stage('Build'){
+                steps {
+                    echo "Building the project..."
+                    bat "mvn clean install -DskipTests"
+                }
+            }
 
-		stage('Test'){
-			steps{
-				bat "mvn test"
-			}
-		}
+            stage('Test'){
+                steps{
+                    echo "Running tests..."
+                    bat "mvn test"
+                }
+            }
 
-		stage('Deploy') {
-			steps {
-			    bat "mvn jar:jar deploy:deploy"
-			}
-		}
-        
+            stage('Deploy') {
+                steps {
+                    echo "Deploying the artifact..."
+                    bat "mvn jar:jar deploy:deploy"
+                }
+            }
+        } 
     }
     post{
             success{
