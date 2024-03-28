@@ -5,7 +5,7 @@ pipeline {
         CHAT_ID = "-1002012810646"
     }
     tools {
-            maven 'Maven 3.9.2'
+            maven 'maven 3.9.2'
     }
     stages {
         stage('Fetch from GitHub') { //build steps
