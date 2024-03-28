@@ -1,34 +1,30 @@
 pipeline {
-    agent any // You may specify the agent/machine as per your requirement
+    agent any // window agent, Jenkins-laravel (other machine)
     environment {
         BOT_TOKEN = "6853243184:AAF2zVn5Q_bWzgjmAERZjLJp-WEVfMczzDA"
         CHAT_ID = "-1002012810646"
     }
     stages {
-        stage('Fetch from GitHub') { // Build steps
+        stage('Fetch from GitHub') { //build steps
             steps {
-                echo 'Fetching from GitHub'
-                git branch: 'tp2', url: 'https://github.com/Monopich/devops_jenkins.git'
+                echo 'Fetching for GitHub'
+                git branch: 'SpringBoot_Maven', url: 'https://github.com/Monopich/DevOps_All_Project.git'
             }
         }
-        stage('Build') {
-            steps {
-                echo "Building the project..."
-                sh "./mvnw clean install -DskipTests"
+        stage('Build'){
+                steps {
+                    echo "Building the project..."
+                    bat "mvn clean install -DskipTests"
+                }
             }
-        }
-        stage('Test') {
-            steps {
+
+        stage('Test'){
+            steps{
                 echo "Running tests..."
-                sh "./mvnw test -Punit"
+                bat "mvn test"
             }
         }
-        stage('Deployment') {
-            steps {
-                echo "Deploying the artifact..."
-                sh './mvnw spring-boot:run -Dserver.port=8001 &'
-            }
-        }
+
         stage('Deploy') {
             steps {
                 echo "Deploying the artifact..."
@@ -36,16 +32,18 @@ pipeline {
             }
         }
     }
-    post {
-        success {
-            script {
-                sh 'sh 1-success-deploy.sh'
+    post{
+            success{
+                sh '''
+                sh 1-success-deploy.sh;\
+                '''
             }
-        }
-        failure {
-            script {
-                sh 'sh 2-fail-deploy.sh'
+            failure{
+                sh '''
+                sh 2-fail-deploy.sh;\
+                '''
             }
-        }
     }
+
 }
+    
