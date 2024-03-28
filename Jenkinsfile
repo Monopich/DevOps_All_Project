@@ -11,20 +11,23 @@ pipeline {
                 git branch: 'tp2', url: 'https://github.com/Monopich/devops_jenknis.git'
             }
         }
-        stage('Build using Tools'){
-            steps{
-                echo 'Compiling code ...'
-                sh 'cp .env.example .env'
-                sh 'composer install && php artisan key:generate && npm install && npm run build'
-            }
-        }
-        stage('Test the app'){
-            steps{
-                echo 'Testing unit tests...'
-                echo 'Testing feature...'
-                sh 'php artisan test'
-            }
-        }
+        stage('Build'){
+			steps {
+				bat "mvn clean install -DskipTests"
+			}
+		}
+
+		stage('Test'){
+			steps{
+				bat "mvn test"
+			}
+		}
+
+		stage('Deploy') {
+			steps {
+			    bat "mvn jar:jar deploy:deploy"
+			}
+		}
         
     }
     post{
