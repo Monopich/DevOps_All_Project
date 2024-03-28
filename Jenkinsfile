@@ -1,7 +1,7 @@
 pipeline {
     agent any // window agent, Jenkins-laravel (other machine)
     tools {
-            maven 'maven-3.9.2'
+            maven 'maven'
     }
     environment {
         BOT_TOKEN = "6853243184:AAF2zVn5Q_bWzgjmAERZjLJp-WEVfMczzDA"
