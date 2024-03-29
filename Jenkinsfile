@@ -4,7 +4,6 @@ pipeline {
             maven 'maven'
     }
     environment {
-        JAVA_HOME = '/var/jenkins_home/jdk/jdk-21.0.2'
         BOT_TOKEN = "6853243184:AAF2zVn5Q_bWzgjmAERZjLJp-WEVfMczzDA"
         CHAT_ID = "-1002012810646"
     }
